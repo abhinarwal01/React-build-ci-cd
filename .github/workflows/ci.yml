@@ -13,8 +13,8 @@ jobs:
         steps:
             - name: "Setup NodeJS"
               uses: actions/setup-node@v4   #Github Action for nodejs setup
-              with:
-                node-version: '21'
+            #   with:
+            #     node-version: '21'
 
             - name: "Check node version"
               run: node --version
