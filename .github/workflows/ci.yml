@@ -14,9 +14,9 @@ jobs:
             - name: "Setup NodeJS"
               uses: actions/setup-node@v4   #Github Action for nodejs setup
             #   with:
-            #     node-version: '21'
+            #     node-version: '21'  # Specify the Node.js version if needed
 
-            - name: "Check node version"
+            - name: "Check node version"    # Check the node version
               run: node --version
 
             - name: "Clone the Repository"
@@ -24,7 +24,13 @@ jobs:
             #   run: git clone <path>   Another way to clone the project through git command
 
             - name: "Install the Dependencies"
-              run: npm install
+              run: npm install   # Install the dependencies using npm
 
             - name: "List Directories"
               run: ls
+
+            - name: "Run Tests"
+              run: npm test   # Run the tests using npm 
+
+            - name: "Run Build"
+              run: npm run build   # Build the project using npm
