@@ -1,0 +1,30 @@
+name: "Sample React CI Pipeline / Workflow"
+
+on:
+    push:
+        branches:
+            - main
+            - master
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: "Setup NodeJS"
+              uses: actions/setup-node@v4   #Github Action for nodejs setup
+              with:
+                node-version: '21'
+
+            - name: "Check node version"
+              run: node --version
+
+            - name: "Clone the Repository"
+              uses: actions/checkout@v2  # This way to clone the repo on host machine through github action. 
+            #   run: git clone <path>   Another way to clone the project through git command
+
+            - name: "Install the Dependencies"
+              run: npm install
+
+            - name: "List Directories"
+              run: ls
