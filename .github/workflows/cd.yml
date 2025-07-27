@@ -10,7 +10,7 @@ on:
 jobs:
   deploy:   # Job to deploy the application
     runs-on: ubuntu-latest
-    environment: production   # Specify the environment for deployment
+    environment: Prod   # Specify the environment for deployment
 
     steps:
 
@@ -26,6 +26,9 @@ jobs:
           name: build-artifact   # Name of the artifact to download
           run-id: ${{ github.event.workflow_run.id }}   # Use the workflow run ID to fetch the correct artifact
           github-token: ${{ github.token }}   # Use GitHub token for authentication
+
+      - name: Echo Vercel Token (for debugging)
+        run: echo "${{ secrets.VERCEL_TOKEN }}"
 
       - name: "Deploy to Vercel"
         run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}  --confirm  --name=cicdproject  # Deploy the build to Vercel using the token stored in GitHub Secrets
