@@ -1,0 +1,37 @@
+name: 'cd-pipeline'
+
+on:
+  workflow_run:
+    workflows: ["Sample React CI Pipeline / Workflow"]   # Trigger this workflow after the CI workflow completes
+    types:
+      - completed   # Only run if the CI workflow is completed
+
+jobs:
+  deploy:   # Job to deploy the application
+    runs-on: ubuntu-latest
+    environment: production   # Specify the environment for deployment
+
+    steps:
+
+      - name: "Setup NodeJS"
+        uses: actions/setup-node@v4   # Github Action for nodejs setup
+        
+      - name: "Setup Vercel CLI"
+        run: npm install -g vercel   # Install Vercel CLI globally
+
+      - name: "Download Build Artifacts"
+        uses: actions/download-artifact@v4   # Download the build artifacts from the CI workflow
+        with:
+          name: build-artifact   # Name of the artifact to download
+          run-id: ${{ github.event.workflow_run.id }}   # Use the workflow run ID to fetch the correct artifact
+          github-token: ${{ github.token }}   # Use GitHub token for authentication
+
+      - name: "Deploy to Vercel"
+        run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }}  --confirm  --name=cicdproject  # Deploy the build to Vercel using the token stored in GitHub Secrets
+        
+      - name: "Post Deployment Notification"
+        run: echo "Deployment to Vercel completed successfully!"   # Notify that the deployment is complete
+
+
+
+

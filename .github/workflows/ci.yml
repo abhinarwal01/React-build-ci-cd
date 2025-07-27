@@ -38,8 +38,8 @@ jobs:
             - name: "Run Build"
               run: npm run build   # Build the project using npm
 
-            - name: "Upload product-ready build files"
-              uses: actions/upload-artifact@v4
+            - name: "Upload product-ready build files"   # Upload the build artifacts
+              uses: actions/upload-artifact@v4  # Github Action to upload the build artifacts
               with:
                 name: build-artifact
-                path: dist
+                path: dist   # Path to the build directory
